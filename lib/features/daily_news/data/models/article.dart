@@ -1,4 +1,4 @@
-import 'package:news_app/daily_news/domain/entities/article_entity.dart';
+import 'package:news_app/features/daily_news/domain/entities/article_entity.dart';
 
 // ignore: must_be_immutable
 class ArticleModel extends ArticleEntity{

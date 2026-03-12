@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:news_app/core/constants/constants.dart';
-import 'package:news_app/daily_news/data/models/article.dart';
+import 'package:news_app/features/daily_news/data/models/article.dart';
 import 'package:retrofit/http.dart';
 part 'news_api_service.g.dart';
 
