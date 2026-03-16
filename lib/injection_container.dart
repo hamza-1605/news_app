@@ -6,7 +6,8 @@ import 'package:news_app/features/daily_news/domain/repository/article_repositor
 import 'package:news_app/features/daily_news/domain/usecases/get_articles_usecase.dart';
 import 'package:news_app/features/daily_news/presentation/bloc/articles/remote/remote_articles_bloc.dart';
 
-final sl = GetIt.instance;
+final sl = GetIt.instance;        // Service Locator
+
 
 Future<void> initializeDependencies() async{
   // Dio
@@ -14,7 +15,7 @@ Future<void> initializeDependencies() async{
   // News API Service
   sl.registerSingleton<NewsApiService>( NewsApiService( sl() ));
 
-  // Article repository ==> Contract
+// Article repository ==> Contract          (ArticleRepo because GetArticles Usecase uses ArticleRepo); also we can't instantiate an abstract class, so we made a Contract by using its implementation class
   sl.registerSingleton<ArticleRepository>(
     ArticleRepositoryImpl( sl() )
   );
@@ -25,7 +26,7 @@ Future<void> initializeDependencies() async{
   );
 
 
-  // Articles BLOC 
+  // Articles BLOC              registorFactory because the state will be updated, so new instance should be generated.
   sl.registerFactory<RemoteArticlesBloc>(
     () => RemoteArticlesBloc( sl() )
   );

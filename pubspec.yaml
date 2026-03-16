@@ -8,38 +8,32 @@ environment:
   sdk: ">=3.10.0 <4.0.0"
 
 dependencies:
+  cached_network_image: ^3.4.1
+  cupertino_icons: ^1.0.8
+  dio: ^5.9.0
+  drift: ^2.20.0
+  drift_flutter: ^0.2.0
+  equatable: ^2.0.8
   flutter:
     sdk: flutter
-
-  cupertino_icons: ^1.0.8
-
-  # State / utils
-  cached_network_image: ^3.4.1
-  equatable: ^2.0.8
   flutter_bloc: ^9.1.1
   flutter_hooks: ^0.21.3+1
   get_it: ^9.2.1
   intl: ^0.20.2
-  shared_preferences: ^2.5.4
-
-  # Networking
-  dio: ^5.9.0
   retrofit: 4.9.0
-
-  # Database
-  drift: ^2.20.0
-  drift_flutter: ^0.2.0
+  shared_preferences: ^2.5.4
   sqlite3_flutter_libs: ^0.5.24
+  url_launcher: 
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
-
-  flutter_lints: ^6.0.0
 
   build_runner: 2.4.15
-  retrofit_generator: 9.6.0
   drift_dev: ^2.20.0
+
+  flutter_lints: ^6.0.0
+  flutter_test:
+    sdk: flutter
+  retrofit_generator: 9.6.0
 
 flutter:
   uses-material-design: true
