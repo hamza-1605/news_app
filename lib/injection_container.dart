@@ -4,7 +4,11 @@ import 'package:news_app/features/daily_news/data/datasources/local/database/app
 import 'package:news_app/features/daily_news/data/datasources/remote/news_api_service.dart';
 import 'package:news_app/features/daily_news/data/repository/article_repository_impl.dart';
 import 'package:news_app/features/daily_news/domain/repository/article_repository.dart';
+import 'package:news_app/features/daily_news/domain/usecases/add_article_usecase.dart';
+import 'package:news_app/features/daily_news/domain/usecases/delete_article_usecase.dart';
 import 'package:news_app/features/daily_news/domain/usecases/get_articles_usecase.dart';
+import 'package:news_app/features/daily_news/domain/usecases/get_saved_articles_usecase.dart';
+import 'package:news_app/features/daily_news/presentation/bloc/articles/local/local_articles_bloc.dart';
 import 'package:news_app/features/daily_news/presentation/bloc/articles/remote/remote_articles_bloc.dart';
 
 final sl = GetIt.instance;        // Service Locator
@@ -12,7 +16,7 @@ final sl = GetIt.instance;        // Service Locator
 Future<void> initializeDependencies() async{
   // Dio
   sl.registerSingleton<Dio>( Dio() );
-  
+
   // Drift Database
   sl.registerSingleton<AppDatabase>( AppDatabase() );
 
@@ -24,15 +28,31 @@ Future<void> initializeDependencies() async{
     ArticleRepositoryImpl( sl() , sl() )
   );
 
-  // Get Articles Usecase
+  // Get Remote Articles Usecase
   sl.registerSingleton<GetArticlesUsecase>( 
     GetArticlesUsecase( sl() )
   );
 
+  // --------------------- Local DB Usecase -------------------------------------
+  sl.registerSingleton<GetSavedArticlesUsecase>(
+    GetSavedArticlesUsecase( sl() )
+  );
+  sl.registerSingleton<AddArticleUsecase>(
+    AddArticleUsecase( sl() )
+  );
+  sl.registerSingleton<DeleteArticleUsecase>(
+    DeleteArticleUsecase( sl() )
+  );
 
-  // Articles BLOC              registorFactory because the state will be updated, so new instance should be generated.
+
+  // Remote Articles BLOC              registorFactory because the state will be updated, so new instance should be generated.
   sl.registerFactory<RemoteArticlesBloc>(
     () => RemoteArticlesBloc( sl() )
+  );
+
+  // Local Articles BLOC
+  sl.registerFactory<LocalArticlesBloc>(
+    () => LocalArticlesBloc( sl(), sl(), sl() )
   );
 
 }
