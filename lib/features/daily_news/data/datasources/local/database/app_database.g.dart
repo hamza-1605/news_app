@@ -3,12 +3,11 @@
 part of 'app_database.dart';
 
 // ignore_for_file: type=lint
-class $ArticlesTableTable extends ArticlesTable
-    with TableInfo<$ArticlesTableTable, ArticlesTableData> {
+class $ArticlesTable extends Articles with TableInfo<$ArticlesTable, Article> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $ArticlesTableTable(this.attachedDatabase, [this._alias]);
+  $ArticlesTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -108,10 +107,10 @@ class $ArticlesTableTable extends ArticlesTable
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'articles_table';
+  static const String $name = 'articles';
   @override
   VerificationContext validateIntegrity(
-    Insertable<ArticlesTableData> instance, {
+    Insertable<Article> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -176,9 +175,9 @@ class $ArticlesTableTable extends ArticlesTable
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  ArticlesTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+  Article map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return ArticlesTableData(
+    return Article(
       id: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}id'],
@@ -215,13 +214,12 @@ class $ArticlesTableTable extends ArticlesTable
   }
 
   @override
-  $ArticlesTableTable createAlias(String alias) {
-    return $ArticlesTableTable(attachedDatabase, alias);
+  $ArticlesTable createAlias(String alias) {
+    return $ArticlesTable(attachedDatabase, alias);
   }
 }
 
-class ArticlesTableData extends DataClass
-    implements Insertable<ArticlesTableData> {
+class Article extends DataClass implements Insertable<Article> {
   final int id;
   final String? author;
   final String? content;
@@ -230,7 +228,7 @@ class ArticlesTableData extends DataClass
   final String? title;
   final String? url;
   final String? urlToImage;
-  const ArticlesTableData({
+  const Article({
     required this.id,
     this.author,
     this.content,
@@ -268,8 +266,8 @@ class ArticlesTableData extends DataClass
     return map;
   }
 
-  ArticlesTableCompanion toCompanion(bool nullToAbsent) {
-    return ArticlesTableCompanion(
+  ArticlesCompanion toCompanion(bool nullToAbsent) {
+    return ArticlesCompanion(
       id: Value(id),
       author: author == null && nullToAbsent
           ? const Value.absent()
@@ -293,12 +291,12 @@ class ArticlesTableData extends DataClass
     );
   }
 
-  factory ArticlesTableData.fromJson(
+  factory Article.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return ArticlesTableData(
+    return Article(
       id: serializer.fromJson<int>(json['id']),
       author: serializer.fromJson<String?>(json['author']),
       content: serializer.fromJson<String?>(json['content']),
@@ -324,7 +322,7 @@ class ArticlesTableData extends DataClass
     };
   }
 
-  ArticlesTableData copyWith({
+  Article copyWith({
     int? id,
     Value<String?> author = const Value.absent(),
     Value<String?> content = const Value.absent(),
@@ -333,7 +331,7 @@ class ArticlesTableData extends DataClass
     Value<String?> title = const Value.absent(),
     Value<String?> url = const Value.absent(),
     Value<String?> urlToImage = const Value.absent(),
-  }) => ArticlesTableData(
+  }) => Article(
     id: id ?? this.id,
     author: author.present ? author.value : this.author,
     content: content.present ? content.value : this.content,
@@ -343,8 +341,8 @@ class ArticlesTableData extends DataClass
     url: url.present ? url.value : this.url,
     urlToImage: urlToImage.present ? urlToImage.value : this.urlToImage,
   );
-  ArticlesTableData copyWithCompanion(ArticlesTableCompanion data) {
-    return ArticlesTableData(
+  Article copyWithCompanion(ArticlesCompanion data) {
+    return Article(
       id: data.id.present ? data.id.value : this.id,
       author: data.author.present ? data.author.value : this.author,
       content: data.content.present ? data.content.value : this.content,
@@ -364,7 +362,7 @@ class ArticlesTableData extends DataClass
 
   @override
   String toString() {
-    return (StringBuffer('ArticlesTableData(')
+    return (StringBuffer('Article(')
           ..write('id: $id, ')
           ..write('author: $author, ')
           ..write('content: $content, ')
@@ -391,7 +389,7 @@ class ArticlesTableData extends DataClass
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is ArticlesTableData &&
+      (other is Article &&
           other.id == this.id &&
           other.author == this.author &&
           other.content == this.content &&
@@ -402,7 +400,7 @@ class ArticlesTableData extends DataClass
           other.urlToImage == this.urlToImage);
 }
 
-class ArticlesTableCompanion extends UpdateCompanion<ArticlesTableData> {
+class ArticlesCompanion extends UpdateCompanion<Article> {
   final Value<int> id;
   final Value<String?> author;
   final Value<String?> content;
@@ -411,7 +409,7 @@ class ArticlesTableCompanion extends UpdateCompanion<ArticlesTableData> {
   final Value<String?> title;
   final Value<String?> url;
   final Value<String?> urlToImage;
-  const ArticlesTableCompanion({
+  const ArticlesCompanion({
     this.id = const Value.absent(),
     this.author = const Value.absent(),
     this.content = const Value.absent(),
@@ -421,7 +419,7 @@ class ArticlesTableCompanion extends UpdateCompanion<ArticlesTableData> {
     this.url = const Value.absent(),
     this.urlToImage = const Value.absent(),
   });
-  ArticlesTableCompanion.insert({
+  ArticlesCompanion.insert({
     this.id = const Value.absent(),
     this.author = const Value.absent(),
     this.content = const Value.absent(),
@@ -431,7 +429,7 @@ class ArticlesTableCompanion extends UpdateCompanion<ArticlesTableData> {
     this.url = const Value.absent(),
     this.urlToImage = const Value.absent(),
   });
-  static Insertable<ArticlesTableData> custom({
+  static Insertable<Article> custom({
     Expression<int>? id,
     Expression<String>? author,
     Expression<String>? content,
@@ -453,7 +451,7 @@ class ArticlesTableCompanion extends UpdateCompanion<ArticlesTableData> {
     });
   }
 
-  ArticlesTableCompanion copyWith({
+  ArticlesCompanion copyWith({
     Value<int>? id,
     Value<String?>? author,
     Value<String?>? content,
@@ -463,7 +461,7 @@ class ArticlesTableCompanion extends UpdateCompanion<ArticlesTableData> {
     Value<String?>? url,
     Value<String?>? urlToImage,
   }) {
-    return ArticlesTableCompanion(
+    return ArticlesCompanion(
       id: id ?? this.id,
       author: author ?? this.author,
       content: content ?? this.content,
@@ -507,7 +505,7 @@ class ArticlesTableCompanion extends UpdateCompanion<ArticlesTableData> {
 
   @override
   String toString() {
-    return (StringBuffer('ArticlesTableCompanion(')
+    return (StringBuffer('ArticlesCompanion(')
           ..write('id: $id, ')
           ..write('author: $author, ')
           ..write('content: $content, ')
@@ -524,16 +522,16 @@ class ArticlesTableCompanion extends UpdateCompanion<ArticlesTableData> {
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
-  late final $ArticlesTableTable articlesTable = $ArticlesTableTable(this);
+  late final $ArticlesTable articles = $ArticlesTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [articlesTable];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [articles];
 }
 
-typedef $$ArticlesTableTableCreateCompanionBuilder =
-    ArticlesTableCompanion Function({
+typedef $$ArticlesTableCreateCompanionBuilder =
+    ArticlesCompanion Function({
       Value<int> id,
       Value<String?> author,
       Value<String?> content,
@@ -543,8 +541,8 @@ typedef $$ArticlesTableTableCreateCompanionBuilder =
       Value<String?> url,
       Value<String?> urlToImage,
     });
-typedef $$ArticlesTableTableUpdateCompanionBuilder =
-    ArticlesTableCompanion Function({
+typedef $$ArticlesTableUpdateCompanionBuilder =
+    ArticlesCompanion Function({
       Value<int> id,
       Value<String?> author,
       Value<String?> content,
@@ -555,9 +553,9 @@ typedef $$ArticlesTableTableUpdateCompanionBuilder =
       Value<String?> urlToImage,
     });
 
-class $$ArticlesTableTableFilterComposer
-    extends Composer<_$AppDatabase, $ArticlesTableTable> {
-  $$ArticlesTableTableFilterComposer({
+class $$ArticlesTableFilterComposer
+    extends Composer<_$AppDatabase, $ArticlesTable> {
+  $$ArticlesTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -605,9 +603,9 @@ class $$ArticlesTableTableFilterComposer
   );
 }
 
-class $$ArticlesTableTableOrderingComposer
-    extends Composer<_$AppDatabase, $ArticlesTableTable> {
-  $$ArticlesTableTableOrderingComposer({
+class $$ArticlesTableOrderingComposer
+    extends Composer<_$AppDatabase, $ArticlesTable> {
+  $$ArticlesTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -655,9 +653,9 @@ class $$ArticlesTableTableOrderingComposer
   );
 }
 
-class $$ArticlesTableTableAnnotationComposer
-    extends Composer<_$AppDatabase, $ArticlesTableTable> {
-  $$ArticlesTableTableAnnotationComposer({
+class $$ArticlesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ArticlesTable> {
+  $$ArticlesTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -695,39 +693,32 @@ class $$ArticlesTableTableAnnotationComposer
   );
 }
 
-class $$ArticlesTableTableTableManager
+class $$ArticlesTableTableManager
     extends
         RootTableManager<
           _$AppDatabase,
-          $ArticlesTableTable,
-          ArticlesTableData,
-          $$ArticlesTableTableFilterComposer,
-          $$ArticlesTableTableOrderingComposer,
-          $$ArticlesTableTableAnnotationComposer,
-          $$ArticlesTableTableCreateCompanionBuilder,
-          $$ArticlesTableTableUpdateCompanionBuilder,
-          (
-            ArticlesTableData,
-            BaseReferences<
-              _$AppDatabase,
-              $ArticlesTableTable,
-              ArticlesTableData
-            >,
-          ),
-          ArticlesTableData,
+          $ArticlesTable,
+          Article,
+          $$ArticlesTableFilterComposer,
+          $$ArticlesTableOrderingComposer,
+          $$ArticlesTableAnnotationComposer,
+          $$ArticlesTableCreateCompanionBuilder,
+          $$ArticlesTableUpdateCompanionBuilder,
+          (Article, BaseReferences<_$AppDatabase, $ArticlesTable, Article>),
+          Article,
           PrefetchHooks Function()
         > {
-  $$ArticlesTableTableTableManager(_$AppDatabase db, $ArticlesTableTable table)
+  $$ArticlesTableTableManager(_$AppDatabase db, $ArticlesTable table)
     : super(
         TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$ArticlesTableTableFilterComposer($db: db, $table: table),
+              $$ArticlesTableFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              $$ArticlesTableTableOrderingComposer($db: db, $table: table),
+              $$ArticlesTableOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
-              $$ArticlesTableTableAnnotationComposer($db: db, $table: table),
+              $$ArticlesTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
@@ -738,7 +729,7 @@ class $$ArticlesTableTableTableManager
                 Value<String?> title = const Value.absent(),
                 Value<String?> url = const Value.absent(),
                 Value<String?> urlToImage = const Value.absent(),
-              }) => ArticlesTableCompanion(
+              }) => ArticlesCompanion(
                 id: id,
                 author: author,
                 content: content,
@@ -758,7 +749,7 @@ class $$ArticlesTableTableTableManager
                 Value<String?> title = const Value.absent(),
                 Value<String?> url = const Value.absent(),
                 Value<String?> urlToImage = const Value.absent(),
-              }) => ArticlesTableCompanion.insert(
+              }) => ArticlesCompanion.insert(
                 id: id,
                 author: author,
                 content: content,
@@ -776,27 +767,24 @@ class $$ArticlesTableTableTableManager
       );
 }
 
-typedef $$ArticlesTableTableProcessedTableManager =
+typedef $$ArticlesTableProcessedTableManager =
     ProcessedTableManager<
       _$AppDatabase,
-      $ArticlesTableTable,
-      ArticlesTableData,
-      $$ArticlesTableTableFilterComposer,
-      $$ArticlesTableTableOrderingComposer,
-      $$ArticlesTableTableAnnotationComposer,
-      $$ArticlesTableTableCreateCompanionBuilder,
-      $$ArticlesTableTableUpdateCompanionBuilder,
-      (
-        ArticlesTableData,
-        BaseReferences<_$AppDatabase, $ArticlesTableTable, ArticlesTableData>,
-      ),
-      ArticlesTableData,
+      $ArticlesTable,
+      Article,
+      $$ArticlesTableFilterComposer,
+      $$ArticlesTableOrderingComposer,
+      $$ArticlesTableAnnotationComposer,
+      $$ArticlesTableCreateCompanionBuilder,
+      $$ArticlesTableUpdateCompanionBuilder,
+      (Article, BaseReferences<_$AppDatabase, $ArticlesTable, Article>),
+      Article,
       PrefetchHooks Function()
     >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
   $AppDatabaseManager(this._db);
-  $$ArticlesTableTableTableManager get articlesTable =>
-      $$ArticlesTableTableTableManager(_db, _db.articlesTable);
+  $$ArticlesTableTableManager get articles =>
+      $$ArticlesTableTableManager(_db, _db.articles);
 }

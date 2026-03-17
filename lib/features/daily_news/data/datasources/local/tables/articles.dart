@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 
-class ArticlesTable extends Table{
+// Schema for Drift DB
+class Articles extends Table{
   IntColumn get id => integer().autoIncrement()();
 
   TextColumn get author => text().nullable()();

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:news_app/features/daily_news/data/datasources/local/database/app_database.dart';
 import 'package:news_app/features/daily_news/data/datasources/remote/news_api_service.dart';
 import 'package:news_app/features/daily_news/data/repository/article_repository_impl.dart';
 import 'package:news_app/features/daily_news/domain/repository/article_repository.dart';
@@ -8,16 +9,19 @@ import 'package:news_app/features/daily_news/presentation/bloc/articles/remote/r
 
 final sl = GetIt.instance;        // Service Locator
 
-
 Future<void> initializeDependencies() async{
   // Dio
   sl.registerSingleton<Dio>( Dio() );
+  
+  // Drift Database
+  sl.registerSingleton<AppDatabase>( AppDatabase() );
+
   // News API Service
   sl.registerSingleton<NewsApiService>( NewsApiService( sl() ));
 
 // Article repository ==> Contract          (ArticleRepo because GetArticles Usecase uses ArticleRepo); also we can't instantiate an abstract class, so we made a Contract by using its implementation class
   sl.registerSingleton<ArticleRepository>(
-    ArticleRepositoryImpl( sl() )
+    ArticleRepositoryImpl( sl() , sl() )
   );
 
   // Get Articles Usecase
