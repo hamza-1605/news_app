@@ -19,7 +19,7 @@ class ArticleRepositoryImpl implements ArticleRepository{
     try {
       final articles = await _newsApiService.getNewsArticles(
         apiKey: newsAPIKey,
-        sources: newsSources,
+        query: query,
       );
 
       if(articles.isEmpty){

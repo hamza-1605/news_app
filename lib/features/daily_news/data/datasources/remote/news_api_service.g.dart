@@ -1,14 +1,10 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-// ignore_for_file: avoid_print
-
 part of 'news_api_service.dart';
 
 // **************************************************************************
 // RetrofitGenerator
 // **************************************************************************
-
-// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element,unnecessary_string_interpolations,unused_element_parameter
 class ParseErrorLogger {
   void logError(Object error, StackTrace stackTrace, RequestOptions options) {
     // You can customize what you want to do with the error
@@ -17,6 +13,8 @@ class ParseErrorLogger {
     print('Request path: ${options.path}');
   }
 }
+
+// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element,unnecessary_string_interpolations,unused_element_parameter
 
 class _NewsApiService implements NewsApiService {
   _NewsApiService(this._dio, {this.baseUrl, this.errorLogger}) {
@@ -32,13 +30,10 @@ class _NewsApiService implements NewsApiService {
   @override
   Future<List<ArticleModel>> getNewsArticles({
     String? apiKey,
-    String? sources,
+    String? query,
   }) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{
-      r'apiKey': apiKey,
-      r'sources': sources,
-    };
+    final queryParameters = <String, dynamic>{r'apiKey': apiKey, r'q': query};
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
@@ -52,11 +47,11 @@ class _NewsApiService implements NewsApiService {
           )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    final _result = await _dio.fetch<List<dynamic>>(_options);
     late List<ArticleModel> _value;
     try {
-      _value = _result.data!['articles']
-          .map<ArticleModel>((dynamic i) => ArticleModel.fromJson(i as Map<String, dynamic>))
+      _value = _result.data!
+          .map((dynamic i) => ArticleModel.fromJson(i as Map<String, dynamic>))
           .toList();
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);

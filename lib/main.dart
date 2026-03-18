@@ -7,7 +7,6 @@ import 'package:news_app/features/daily_news/presentation/bloc/articles/local/lo
 import 'package:news_app/features/daily_news/presentation/bloc/articles/remote/remote_articles_bloc.dart';
 import 'package:news_app/features/daily_news/presentation/bloc/articles/remote/remote_articles_event.dart';
 import 'package:news_app/features/daily_news/presentation/pages/home/daily_news.dart';
-// import 'package:news_app/features/daily_news/presentation/pages/home/saved_news.dart';
 import 'package:news_app/injection_container.dart';
 
 late AppDatabase appDb;
@@ -30,7 +29,7 @@ class MyApp extends StatelessWidget {
         BlocProvider<LocalArticlesBloc>( create: (context) => sl()..add( GetSavedArticles() ) ),
       ], 
       child: MaterialApp(
-        title: 'Daily News App',
+        title: 'DailyNews',
         debugShowCheckedModeBanner: false,
         theme: appTheme(),
         home: DailyNews(),

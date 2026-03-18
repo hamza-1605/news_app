@@ -9,7 +9,16 @@ class DailyNews extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar( 
-        title: const Text("Latest News"),
+        centerTitle: false,
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          spacing: 12,
+          children: [
+            Image.asset('assets/images/daily_news_logo.png', width: 40),
+            const Text("Daily News"),
+          ],
+        ),
+
         actions: [
           InkWell(
             onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SavedNews())),

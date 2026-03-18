@@ -14,6 +14,8 @@ ThemeData appTheme(){
       ),
       centerTitle: true,
       iconTheme: IconThemeData(color: Colors.black87),
+      elevation: 0,
+      scrolledUnderElevation: 0,
     ),
 
     listTileTheme: ListTileThemeData(
