@@ -14,9 +14,14 @@ class ArticleTile extends StatelessWidget {
     String formattedTime = "";
 
     if(article.publishedAt != null){
-      DateTime date = DateTime.parse( article.publishedAt! );
-      formattedDate = DateFormat.Hm().format(date);
-      formattedTime = DateFormat.yMMMEd().format(date);
+      try {
+        DateTime date = DateTime.parse(article.publishedAt!);
+        formattedTime = DateFormat.Hm().format(date);
+        formattedDate = DateFormat.yMMMEd().format(date);
+      } catch (e) {
+        formattedTime = "";
+        formattedDate = "";
+      }
     }
 
     return InkWell(
@@ -42,7 +47,30 @@ class ArticleTile extends StatelessWidget {
                     width: double.infinity,
                     height: 200,
                     fit: BoxFit.cover,
-                  )
+                    loadingBuilder: (context, child, loadingProgress){
+                      if(loadingProgress == null) return child;
+                      return SizedBox(
+                        height: 200,
+                        width: double.infinity,
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            constraints: BoxConstraints(
+                              maxHeight: 40,
+                              maxWidth: 40,
+                              minHeight: 40,
+                              minWidth: 40,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                    errorBuilder: (context, error, stackTrace) => Container(
+                        height: 200,
+                        width: double.infinity,
+                        color: Colors.grey.shade300,
+                        child: const Icon(Icons.broken_image),
+                      ),
+                    )
                 : Container(
                     width: double.infinity,
                     height: 200,
@@ -81,7 +109,7 @@ class ArticleTile extends StatelessWidget {
             // Date
             if (article.publishedAt != null)
               Text(
-                '$formattedTime − $formattedDate',
+                '$formattedDate − $formattedTime',
                 style: TextStyle(
                   fontSize: 12,
                   color: Colors.grey.shade500,

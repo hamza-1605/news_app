@@ -18,8 +18,8 @@ class ArticlePage extends StatelessWidget {
 
     if(article.publishedAt != null){
       DateTime date = DateTime.parse( article.publishedAt! );
-      formattedDate = DateFormat.Hm().format(date);
-      formattedTime = DateFormat.yMMMEd().format(date);
+      formattedTime = DateFormat.Hm().format(date);
+      formattedDate = DateFormat.yMMMEd().format(date);
     }
 
     return Scaffold(
@@ -37,9 +37,31 @@ class ArticlePage extends StatelessWidget {
               Image.network(
                 article.urlToImage!,
                 width: double.infinity,
-                // height: 220,
-                fit: BoxFit.contain,
-              ),
+                fit: BoxFit.cover,
+                loadingBuilder: (context, child, loadingProgress){
+                  if(loadingProgress == null) return child;
+                  return SizedBox(
+                    height: 200,
+                    width: double.infinity,
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        constraints: BoxConstraints(
+                          maxHeight: 40,
+                          maxWidth: 40,
+                          minHeight: 40,
+                          minWidth: 40,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+                errorBuilder: (context, error, stackTrace) => Container(
+                    height: 200,
+                    width: double.infinity,
+                    color: Colors.grey.shade300,
+                    child: const Icon(Icons.broken_image),
+                  ),
+                ),
 
             Padding(
               padding: const EdgeInsets.all(16),
@@ -71,7 +93,7 @@ class ArticlePage extends StatelessWidget {
 
                   if (article.publishedAt != null)
                     Text(
-                      '$formattedTime, $formattedDate',
+                      '$formattedDate, $formattedTime',
                       style: const TextStyle(
                         fontSize: 14,
                         color: Colors.grey,

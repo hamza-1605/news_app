@@ -21,7 +21,8 @@ class BlocBody extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text("Failed to load news"),
+                const Text("Failed to load news."),
+                const Text("Check your Internet connection and try again."),
                 const SizedBox(height: 10),
                 ElevatedButton(
                   onPressed: () {

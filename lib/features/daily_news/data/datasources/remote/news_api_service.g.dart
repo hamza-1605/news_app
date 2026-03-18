@@ -31,9 +31,16 @@ class _NewsApiService implements NewsApiService {
   Future<List<ArticleModel>> getNewsArticles({
     String? apiKey,
     String? query,
+    String? sortBy,
+    String? newsLanguage,
   }) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'apiKey': apiKey, r'q': query};
+    final queryParameters = <String, dynamic>{
+      r'apiKey': apiKey,
+      r'q': query,
+      r'sortBy': sortBy,
+      r'language': newsLanguage,
+    };
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
@@ -41,17 +48,17 @@ class _NewsApiService implements NewsApiService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/top-headlines',
+            '/everything',
             queryParameters: queryParameters,
             data: _data,
           )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
-    final _result = await _dio.fetch<List<dynamic>>(_options);
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
     late List<ArticleModel> _value;
     try {
-      _value = _result.data!
-          .map((dynamic i) => ArticleModel.fromJson(i as Map<String, dynamic>))
+      _value = _result.data!['articles']
+          .map<ArticleModel>((dynamic i) => ArticleModel.fromJson(i as Map<String, dynamic>))
           .toList();
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
