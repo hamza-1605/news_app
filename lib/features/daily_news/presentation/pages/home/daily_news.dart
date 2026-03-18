@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/features/daily_news/presentation/bloc/articles/remote/remote_articles_bloc.dart';
 import 'package:news_app/features/daily_news/presentation/bloc/articles/remote/remote_articles_state.dart';
+import 'package:news_app/features/daily_news/presentation/pages/home/saved_news.dart';
 import 'package:news_app/features/daily_news/presentation/widgets/article_tile.dart';
 
 class DailyNews extends StatelessWidget {
@@ -10,9 +11,21 @@ class DailyNews extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar( title: const Text("Daily News") ),
+      appBar: AppBar( 
+        title: const Text("Latest News"), 
+        actions: [
+          InkWell(
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SavedNews())),
+            child: Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Icon(Icons.bookmark, size: 30.0),
+            ),
+          )
+        ],
+      ),
 
       body: buildBody(),
+
     );
   }
 

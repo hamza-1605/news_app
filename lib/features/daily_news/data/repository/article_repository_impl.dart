@@ -65,8 +65,8 @@ class ArticleRepositoryImpl implements ArticleRepository{
 
   // Delete News locally
   @override
-  Future<void> removeArticle( ArticleEntity article) async{
-    await appDb.deleteArticle( article.toCompanion() );
+  Future<void> removeArticle( int id ) async{
+    await appDb.deleteArticle( id );
   }
 
 }

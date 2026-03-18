@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:news_app/core/utils/utility_functions.dart';
 import 'package:news_app/features/daily_news/domain/entities/article_entity.dart';
+import 'package:news_app/features/daily_news/presentation/bloc/articles/local/local_articles_bloc.dart';
+import 'package:news_app/features/daily_news/presentation/bloc/articles/local/local_articles_event.dart';
 
 class ArticlePage extends StatelessWidget {
   const ArticlePage({super.key, required this.article});
@@ -113,6 +116,23 @@ class ArticlePage extends StatelessWidget {
             )
           ],
         ),
+      ),
+
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => handleAddBookmark(context),
+        child: Icon(Icons.bookmark_add),
+      ),
+    );
+  }
+
+
+
+  void handleAddBookmark(BuildContext context ){
+    BlocProvider.of<LocalArticlesBloc>(context).add( AddArticle(article) );
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("Article Saved Successfully!"),
+        backgroundColor: Colors.black,
       ),
     );
   }

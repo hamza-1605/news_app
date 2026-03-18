@@ -27,14 +27,14 @@ class LocalArticlesBloc extends Bloc<LocalArticlesEvent, LocalArticlesState>{
   }
 
   void onAddArticle(AddArticle addArticle, Emitter<LocalArticlesState> emit) async{
-    await addArticleUsecase(params: addArticle.articleEntity);
+    await addArticleUsecase(params: addArticle.article);
 
     final articles = await getSavedArticlesUsecase();
     emit( LocalArticlesDone(articles) );
   }
 
   void onDeleteArticle(DeleteArticle deleteArticle, Emitter<LocalArticlesState> emit) async{
-    await deleteArticleUsecase(params: deleteArticle.articleEntity);
+    await deleteArticleUsecase(params: deleteArticle.id);
 
     final articles = await getSavedArticlesUsecase();
     emit( LocalArticlesDone(articles) );

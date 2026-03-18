@@ -21,8 +21,8 @@ class AppDatabase extends _$AppDatabase{
   Future<int> insertArticle(ArticlesCompanion article){
     return into(articles).insert(article);
   }
-  Future<int> deleteArticle(ArticlesCompanion article){
-    return delete(articles).delete(article); 
+  Future<int> deleteArticle(int id){
+    return (delete(articles)..where( (tbl) => tbl.id.equals(id) )).go();
   }
 }
 

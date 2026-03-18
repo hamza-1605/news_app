@@ -8,5 +8,5 @@ abstract class ArticleRepository {
 
   Future<void> addArticle(ArticleEntity article);
 
-  Future<void> removeArticle(ArticleEntity article);
+  Future<void> removeArticle(int id);
 }

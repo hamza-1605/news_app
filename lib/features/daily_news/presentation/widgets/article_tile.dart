@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import '../pages/home/article_page.dart';
 import 'package:news_app/features/daily_news/domain/entities/article_entity.dart';
-import '../pages/article_page.dart';
 
 class ArticleTile extends StatelessWidget {
   final ArticleEntity article;
@@ -44,8 +44,8 @@ class ArticleTile extends StatelessWidget {
                     fit: BoxFit.cover,
                   )
                 : Container(
-                    width: 120,
-                    height: 150,
+                    width: double.infinity,
+                    height: 200,
                     color: Colors.grey.shade300,
                     child: const Icon(Icons.image),
                   ),
@@ -77,18 +77,7 @@ class ArticleTile extends StatelessWidget {
             ),
                 
             const SizedBox(height: 6),
-                
-            // // Author 
-            // if (article.author != null)
-            //   Text(
-            //     article.author!,
-            //     overflow: TextOverflow.ellipsis,
-            //     style: TextStyle(
-            //       fontSize: 12,
-            //       color: Colors.grey.shade500,
-            //     ),
-            //   ),
-                
+
             // Date
             if (article.publishedAt != null)
               Text(
