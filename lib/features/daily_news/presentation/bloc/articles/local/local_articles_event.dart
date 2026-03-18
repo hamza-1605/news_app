@@ -23,9 +23,18 @@ class AddArticle extends LocalArticlesEvent{
 
 
 class DeleteArticle extends LocalArticlesEvent{
-  final int? id;
-  const DeleteArticle( this.id ) ;
+  final String? url;
+  const DeleteArticle( this.url ) ;
 
   @override
-  List<Object?> get props => [id];
+  List<Object?> get props => [url];
+}
+
+
+class ToggleArticle extends LocalArticlesEvent {
+  final ArticleEntity article;
+  const ToggleArticle(this.article);
+
+  @override
+  List<Object?> get props => [article];
 }

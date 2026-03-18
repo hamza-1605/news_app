@@ -18,11 +18,23 @@ class AppDatabase extends _$AppDatabase{
   Future<List<Article>> getAllArticles(){
     return select(articles).get();
   } 
+  
   Future<int> insertArticle(ArticlesCompanion article){
-    return into(articles).insert(article);
+    return into(articles).insert(
+      article,
+      mode: InsertMode.insertOrIgnore, // ✅ prevents crash  
+    );
   }
-  Future<int> deleteArticle(int id){
-    return (delete(articles)..where( (tbl) => tbl.id.equals(id) )).go();
+
+  Future<int> deleteArticle(String url){
+    return (delete(articles)..where( (tbl) => tbl.url.equals(url) )).go();
+  }
+
+  Future<bool> isArticleSaved(String url) async {
+    final result = await 
+      (select(articles)..where( (tbl) => tbl.url.equals(url) )).get();
+
+    return result.isNotEmpty;
   }
 }
 

@@ -4,7 +4,6 @@ import 'package:news_app/core/resources/data_state.dart';
 import 'package:news_app/features/daily_news/data/datasources/local/database/app_database.dart';
 import 'package:news_app/features/daily_news/data/datasources/remote/news_api_service.dart';
 import 'package:news_app/features/daily_news/data/mappers/article_mapper.dart';
-import 'package:news_app/features/daily_news/data/models/article.dart';
 import 'package:news_app/features/daily_news/domain/entities/article_entity.dart'; 
 import 'package:news_app/features/daily_news/domain/repository/article_repository.dart';
 
@@ -16,7 +15,7 @@ class ArticleRepositoryImpl implements ArticleRepository{
   // ---------------------------------  Remote News  ---------------------------------
   // Get News
   @override
-  Future<DataState<List<ArticleModel>>> getNewsArticles() async{
+  Future<DataState<List<ArticleEntity>>> getNewsArticles() async{
     try {
       final articles = await _newsApiService.getNewsArticles(
         apiKey: newsAPIKey,
@@ -31,7 +30,9 @@ class ArticleRepositoryImpl implements ArticleRepository{
         ));
       }
 
-      return DataSuccess(articles);  
+      return DataSuccess(
+        articles.map( (model) => model.modeltoEntity() ).toList()
+      );
     } 
     on DioException catch (dioError) {
       return DataFailed(dioError);
@@ -65,8 +66,14 @@ class ArticleRepositoryImpl implements ArticleRepository{
 
   // Delete News locally
   @override
-  Future<void> removeArticle( int id ) async{
-    await appDb.deleteArticle( id );
+  Future<void> removeArticleByUrl( String url ) async{
+    await appDb.deleteArticle( url );
+  }
+
+  // Check if Article exists
+  @override
+  Future<bool> isArticleSaved( String url ) {
+    return appDb.isArticleSaved( url );
   }
 
 }

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app/features/daily_news/presentation/bloc/articles/remote/remote_articles_bloc.dart';
-import 'package:news_app/features/daily_news/presentation/bloc/articles/remote/remote_articles_state.dart';
 import 'package:news_app/features/daily_news/presentation/pages/home/saved_news.dart';
-import 'package:news_app/features/daily_news/presentation/widgets/article_tile.dart';
+import 'package:news_app/features/daily_news/presentation/widgets/bloc_body.dart';
 
 class DailyNews extends StatelessWidget {
   const DailyNews({super.key});
@@ -12,7 +9,7 @@ class DailyNews extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar( 
-        title: const Text("Latest News"), 
+        title: const Text("Latest News"),
         actions: [
           InkWell(
             onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SavedNews())),
@@ -24,35 +21,9 @@ class DailyNews extends StatelessWidget {
         ],
       ),
 
-      body: buildBody(),
+
+      body: BlocBody(),
 
     );
-  }
-
-
-
-  BlocBuilder buildBody(){
-    return BlocBuilder<RemoteArticlesBloc, RemoteArticlesState>(
-      builder: (context, state) {
-        if(state is RemoteArticlesLoading){
-          return const Center(child: CircularProgressIndicator());
-        }
-        
-        if(state is RemoteArticlesError){
-          return Center(child: IconButton(onPressed: (){}, icon: Icon(Icons.refresh)));
-        }
-        
-        if(state is RemoteArticlesDone){
-          return ListView.builder(
-            itemCount: state.articles!.length,
-            itemBuilder: (context, index) {
-              return ArticleTile(article: state.articles![index]);
-            },
-          );
-        }
-        
-        return SizedBox();
-      },
-    ); 
   }
 }

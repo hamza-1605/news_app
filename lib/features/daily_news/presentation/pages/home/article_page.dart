@@ -5,6 +5,7 @@ import 'package:news_app/core/utils/utility_functions.dart';
 import 'package:news_app/features/daily_news/domain/entities/article_entity.dart';
 import 'package:news_app/features/daily_news/presentation/bloc/articles/local/local_articles_bloc.dart';
 import 'package:news_app/features/daily_news/presentation/bloc/articles/local/local_articles_event.dart';
+import 'package:news_app/features/daily_news/presentation/bloc/articles/local/local_articles_state.dart';
 
 class ArticlePage extends StatelessWidget {
   const ArticlePage({super.key, required this.article});
@@ -118,20 +119,40 @@ class ArticlePage extends StatelessWidget {
         ),
       ),
 
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => handleAddBookmark(context),
-        child: Icon(Icons.bookmark_add),
-      ),
+      floatingActionButton: 
+        BlocBuilder<LocalArticlesBloc, LocalArticlesState>(
+          builder: (context, state) {
+            bool isSaved = false;
+
+            if (state is LocalArticlesDone) {
+              isSaved = state.articleEntity!.any(
+                (a) => a.url == article.url,
+              );
+            }
+
+            return FloatingActionButton(
+              onPressed: () => handleToggleBookmark(context, isSaved),
+              child: Icon(
+                isSaved ? Icons.bookmark : Icons.bookmark_border,
+              ),
+            );
+          },
+        ),
     );
   }
 
 
 
-  void handleAddBookmark(BuildContext context ){
-    BlocProvider.of<LocalArticlesBloc>(context).add( AddArticle(article) );
+  void handleToggleBookmark(BuildContext context, bool isSaved) {
+    BlocProvider.of<LocalArticlesBloc>(context).add(ToggleArticle(article));
+
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text("Article Saved Successfully!"),
+        content: Text(
+          isSaved
+              ? "Article Removed"
+              : "Article Saved Successfully!",
+        ),
         backgroundColor: Colors.black,
       ),
     );

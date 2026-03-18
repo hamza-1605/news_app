@@ -8,5 +8,7 @@ abstract class ArticleRepository {
 
   Future<void> addArticle(ArticleEntity article);
 
-  Future<void> removeArticle(int id);
+  Future<void> removeArticleByUrl(String url);
+
+  Future<bool> isArticleSaved(String url);
 }

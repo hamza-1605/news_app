@@ -8,6 +8,7 @@ import 'package:news_app/features/daily_news/domain/usecases/add_article_usecase
 import 'package:news_app/features/daily_news/domain/usecases/delete_article_usecase.dart';
 import 'package:news_app/features/daily_news/domain/usecases/get_articles_usecase.dart';
 import 'package:news_app/features/daily_news/domain/usecases/get_saved_articles_usecase.dart';
+import 'package:news_app/features/daily_news/domain/usecases/toggle_article_usecase.dart';
 import 'package:news_app/features/daily_news/presentation/bloc/articles/local/local_articles_bloc.dart';
 import 'package:news_app/features/daily_news/presentation/bloc/articles/remote/remote_articles_bloc.dart';
 
@@ -43,6 +44,9 @@ Future<void> initializeDependencies() async{
   sl.registerSingleton<DeleteArticleUsecase>(
     DeleteArticleUsecase( sl() )
   );
+  sl.registerSingleton<ToggleArticleUsecase>(
+    ToggleArticleUsecase( sl() )
+  );
 
 
   // Remote Articles BLOC              registorFactory because the state will be updated, so new instance should be generated.
@@ -52,7 +56,7 @@ Future<void> initializeDependencies() async{
 
   // Local Articles BLOC
   sl.registerFactory<LocalArticlesBloc>(
-    () => LocalArticlesBloc( sl(), sl(), sl() )
+    () => LocalArticlesBloc( sl(), sl(), sl(), sl() )
   );
 
 }

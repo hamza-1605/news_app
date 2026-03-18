@@ -9,6 +9,11 @@ class Articles extends Table{
   TextColumn get description => text().nullable()();
   TextColumn get publishedAt => text().nullable()();
   TextColumn get title => text().nullable()();
-  TextColumn get url => text().nullable()();
+  TextColumn get url => text()();
   TextColumn get urlToImage => text().nullable()();
+  
+  @override
+  List<Set<Column>> get uniqueKeys => [
+    {url}, // ✅ prevents duplicates
+  ];
 }

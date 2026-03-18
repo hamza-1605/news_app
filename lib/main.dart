@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
       ], 
       child: MaterialApp(
         title: 'Daily News App',
+        debugShowCheckedModeBanner: false,
         theme: appTheme(),
         home: DailyNews(),
       ),
