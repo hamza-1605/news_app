@@ -3,5 +3,6 @@ abstract class RemoteArticlesEvent {
 }
 
 class GetArticles extends RemoteArticlesEvent{
-  const GetArticles();
+  final String query;
+  const GetArticles({required this.query});
 }

@@ -35,6 +35,13 @@ ThemeData appTheme(){
         backgroundColor: Colors.red[700],
         foregroundColor: Colors.white,
       ),
+    ),
+
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.yellowAccent,
+        foregroundColor: Colors.black
+      ),
     )
   );
 }

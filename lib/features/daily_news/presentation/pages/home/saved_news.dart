@@ -36,7 +36,7 @@ class SavedNews extends StatelessWidget {
               },
             );
           } else{
-            return Center( child: Text("No Saved News Found.") );
+            return Center( child: Text("No Saved News Found.\nSaved News can be used to read news offline." , textAlign: TextAlign.center,) );
           }
         }
         

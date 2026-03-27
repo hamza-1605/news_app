@@ -13,7 +13,7 @@ class RemoteArticlesBloc extends Bloc<RemoteArticlesEvent, RemoteArticlesState> 
   
   
   void onGetArticles(GetArticles event, Emitter<RemoteArticlesState> emit) async{
-    final dataState = await getArticlesUsecase.call();
+    final dataState = await getArticlesUsecase.call(params: event.query);
 
     if( dataState is DataSuccess && dataState.data!.isNotEmpty ){
       emit(

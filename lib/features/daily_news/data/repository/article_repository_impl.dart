@@ -15,7 +15,9 @@ class ArticleRepositoryImpl implements ArticleRepository{
   // ---------------------------------  Remote News  ---------------------------------
   // Get News
   @override
-  Future<DataState<List<ArticleEntity>>> getNewsArticles() async{
+  Future<DataState<List<ArticleEntity>>> getNewsArticles({
+    required String query
+  }) async{
     try {
       final articles = await _newsApiService.getNewsArticles(
         apiKey: newsAPIKey,

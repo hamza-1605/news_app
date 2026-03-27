@@ -12,10 +12,12 @@ class BlocBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<RemoteArticlesBloc, RemoteArticlesState>(
       builder: (context, state) {
+        
         if(state is RemoteArticlesLoading){
           return const Center(child: CircularProgressIndicator());
         }
         
+        // Error
         if(state is RemoteArticlesError){
           return Center(
             child: Column(
@@ -26,7 +28,7 @@ class BlocBody extends StatelessWidget {
                 const SizedBox(height: 10),
                 ElevatedButton(
                   onPressed: () {
-                    context.read<RemoteArticlesBloc>().add(GetArticles());
+                    context.read<RemoteArticlesBloc>().add(GetArticles( query: "Cricket"));
                   },
                   child: const Text("Retry"),
                 ),

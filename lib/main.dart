@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<RemoteArticlesBloc>( create: (context) => sl()..add( GetArticles() ) ),
+        BlocProvider<RemoteArticlesBloc>( create: (context) => sl()..add( GetArticles(query: "Cricket") ) ),
         BlocProvider<LocalArticlesBloc>( create: (context) => sl()..add( GetSavedArticles() ) ),
       ], 
       child: MaterialApp(
